@@ -1,0 +1,8 @@
+Flask
+connexion
+Flask-Injector
+Flask-Script
+Flask-RESTful
+Flask-Marshmallow
+Flask-SQLAlchemy
+Flask-Migrate
