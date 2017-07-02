@@ -1,7 +1,10 @@
-from connexion.resolver import RestyResolver
-import connexion
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-if __name__ == '__main__':
-    app = connexion.App(__name__, specification_dir='swagger/')
-    app.add_api('cgm_flask.yaml', resolver=RestyResolver('api'))
-    app.run(port=9090)
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:I<3lambKebabs@localhost/cgmviz'
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+import cgmFlask.models

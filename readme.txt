@@ -11,3 +11,5 @@ $pip install -r requirements.txt
 Starting App:
 $export FLASK_APP=app.py
 $flask run
+
+Viewing output: localhost:9090/v1.0/items

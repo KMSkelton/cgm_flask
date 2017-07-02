@@ -1,8 +1,8 @@
 Flask
-connexion
+numpy
 Flask-Injector
 Flask-Script
-Flask-RESTful
 Flask-Marshmallow
 Flask-SQLAlchemy
 Flask-Migrate
+mysqlclient
