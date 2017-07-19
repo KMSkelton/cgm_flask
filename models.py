@@ -33,9 +33,9 @@ class Measurement(db.Model):
     #joins are worse than duplicated data
 
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
-    device = db.relationship('Device',
-        backref=db.backref('devices', lazy='dynamic'))
+    device = db.relationship('Device')
+        # backref=db.backref('devices', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User',
-        backref=db.backref('users', lazy='dynamic'))
+    user = db.relationship('User')
+        # backref=db.backref('users', lazy='dynamic'))
