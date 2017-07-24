@@ -17,11 +17,24 @@ def load_data(file_name, dType):
     # data = genfromtxt(file_name, delimiter=',', dtype=dType, names = None, missing_values = '', filling_values = 0 )
     # data = genfromtxt(file_name, delimiter=',', dtype=dType, skip_header=1)
     data = pd.read_table(file_name, sep=',')
+    #print("data in load data", data)
+    #data.fillna(0, inplace=True)
+    #print("data after fillna", data)
     return data
 
-def create_meas_record(opts):
-    ''' options for create measurement require measuremant date, glucose value, insulin value, carbohydrate value, event type, manufacturerID, device_id and user_id '''
-
+def create_meas_record(meas_date, event_type, manufacturerID, gluc_value, insulin_value, carb ):
+    ''' options for create measurement require measurement date, glucose value, insulin value, carbohydrate value, event type, manufacturerID, device_id and user_id '''
+    print('Measurement Record Created: ', meas_date, gluc_value, insulin_value, carb, event_type, manufacturerID )
+    record = m.Measurement(**{
+        'meas_date': meas_date,
+        'event_type': event_type,
+        'manufacturerID': manufacturerID,
+        'gluc_value': gluc_value,
+        'insulin_value': insulin_value,
+        'carb': carb
+    })
+    # print(record)
+    return record
 
 def create_user_record(name, userName):
     ''' options for create user require name and username '''
@@ -30,14 +43,19 @@ def create_user_record(name, userName):
         'username': userName,
         'name': name
     })
-    print(record)
+    # print("Create User record record: ", record)
     return record
 
 
-def create_device_record(opts):
+def create_device_record(model, manufacturerID):
     ''' options for create device require model, manufacturerID and user_id '''
-
-
+    print('Device Created: ', model, manufacturerID)
+    record = m.Device(**{
+        'model': model,
+        'manufacturerID': manufacturerID
+    })
+    print("Device Record record: ", record)
+    return record
 Base = declarative_base()
 
 if __name__ == "__main__":
@@ -53,21 +71,30 @@ if __name__ == "__main__":
 
         data=load_data(file_name, dt)
         ''' pandas loads all that data into memory but the trade off is we can access dict locations more than once, and we can go back to before where we are accessing '''
-        # I'm going to create a user by passing in databse locations that correspond to the needed information
+
+        # I'm going to CREATE A USER by passing in databse locations that correspond to the needed information
         # will getting the first and last names together in the same "name" field be tricky?
         firstName = data.loc[data['Event Type'] == 'FirstName']['Patient Info'].iloc[0]
-        print(firstName)
+        # print(firstName)
         lastName = data.loc[data['Event Type'] == 'LastName']['Patient Info'].iloc[0]
         userName = firstName[:4] + lastName[-4:]
         name = firstName + ' ' + lastName
         record = create_user_record(name, userName)
         s.add(record)
         # commit should be moved to the end of try, to capture all the changes made to the database
-        s.commit()
         print("Done creating user")
 
-        # I'm also going to create a device entry the same way I am making user entries.
+        # I'm also going to CREATE A DEVICE entry the same way I am making user entries.
+        deviceData = data[data['Event Type'] == 'Device']
+        for (i, row) in deviceData.iterrows():
+            model = row[5]
+            manufacturerID = row[6]
+            print("mod, manuf:", model, manufacturerID)
+            record = create_device_record(model, manufacturerID)
+            print("record: ", record)
+            s.add(record)
 
+        s.commit()
         # PANDAS DATAFRAME RELATED:
         # This gets the Event Type column then gets the 0th row of that. This will get more info from the column.
         # print(data['Event Type'].iloc[0])
@@ -75,11 +102,15 @@ if __name__ == "__main__":
         # This gets the 0th row, then gets the 'event type' column. This will get more info from the row.
         # print(data.iloc[0]['Event Type'])
 
-        for i in data:
-            print(i)
-            if i[2] == 'EGV':
-                create_meas_record(i[1] + i[2] + i[6] + i[7])
-
+        # for (i, row) in data.iterrows():
+        #     print("what is this?", i, row)
+        #     if row[2] == 'EGV':
+        #         record = create_meas_record(row[1], row[2], row[6], row[7], row[8], row[9])
+        #         print(record)
+        #         s.add(record)
+        # s.commit()
+        #
+        #
     except Exception as inst:
         print(type(inst))
         print(inst.args)

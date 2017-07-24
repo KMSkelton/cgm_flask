@@ -25,11 +25,11 @@ class Device(db.Model):
 class Measurement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     meas_date = db.Column(db.DateTime)
+    event_type = db.Column(db.String(20))
+    manufacturerID = db.Column(db.String(20))
     gluc_value = db.Column(db.Integer)
     insulin_value = db.Column(db.Integer)
     carb = db.Column(db.Float)
-    event_type = db.Column(db.String(20))
-    manufacturerID = db.Column(db.String(20))
     #joins are worse than duplicated data
 
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
