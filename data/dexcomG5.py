@@ -43,7 +43,7 @@ def create_user_record(name, userName):
         'username': userName,
         'name': name
     })
-    # print("Create User record record: ", record)
+    print("Create User record record: ", record, record.__dict__, dir(record))
     return record
 
 
@@ -79,8 +79,9 @@ if __name__ == "__main__":
         lastName = data.loc[data['Event Type'] == 'LastName']['Patient Info'].iloc[0]
         userName = firstName[:4] + lastName[-4:]
         name = firstName + ' ' + lastName
-        record = create_user_record(name, userName)
-        s.add(record)
+        userRecord = create_user_record(name, userName)
+        s.add(userRecord)
+        s.commit()
         # commit should be moved to the end of try, to capture all the changes made to the database
         print("Done creating user")
 
@@ -90,9 +91,9 @@ if __name__ == "__main__":
             model = row[5]
             manufacturerID = row[6]
             print("mod, manuf:", model, manufacturerID)
-            record = create_device_record(model, manufacturerID)
-            print("record: ", record)
-            s.add(record)
+            deviceRecord = create_device_record(model, manufacturerID)
+            print("record: ", deviceRecord)
+            s.add(deviceRecord)
 
         s.commit()
         # PANDAS DATAFRAME RELATED:

@@ -13,3 +13,8 @@ $export FLASK_APP=app.py
 $flask run
 
 Viewing output: localhost:9090/v1.0/items
+
+To view the SQL databases:
+$mySQL -u USER -p [return]
+$[key symbol] type PW [return]
+$show databases
