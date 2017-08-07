@@ -12,6 +12,7 @@ import sqlalchemy as db
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 
 def load_data(file_name, dType):
     # data = genfromtxt(file_name, delimiter=',', dtype=dType, names = None, missing_values = '', filling_values = 0 )
@@ -38,24 +39,34 @@ def create_meas_record(meas_date, event_type, manufacturerID, gluc_value, insuli
 
 def create_user_record(name, userName):
     ''' options for create user require name and username '''
-    print('User Created: ', name, userName)
-    record = m.User(**{
+    print('Attempting to create user: ', name, userName)
+    userVars = {
         'username': userName,
         'name': name
-    })
-    print("Create User record record: ", record, record.__dict__, dir(record))
-    return record
+    }
+    try:
+        return s.query(m.User).filter_by(**userVars).one()
+    except NoResultFound:
+        record = m.User(**userVars)
+        print("Create User record record: ", record, record.__dict__, dir(record))
+        return record
 
 
 def create_device_record(model, manufacturerID):
     ''' options for create device require model, manufacturerID and user_id '''
     print('Device Created: ', model, manufacturerID)
-    record = m.Device(**{
-        'model': model,
-        'manufacturerID': manufacturerID
-    })
-    print("Device Record record: ", record)
-    return record
+    deviceVars = {
+            'model': model,
+            'manufacturerID': manufacturerID
+    }
+    try:
+        return s.query(m.Device).filter_by(**deviceVars).one()
+    except NoResultFound:
+        record = m.Device(**deviceVars)
+        print("Device Record record: ", record)
+        return record
+
+
 Base = declarative_base()
 
 if __name__ == "__main__":
@@ -83,7 +94,7 @@ if __name__ == "__main__":
         s.add(userRecord)
         s.commit()
         # commit should be moved to the end of try, to capture all the changes made to the database
-        print("Done creating user")
+        print("Done creating user", userRecord.id)
 
         # I'm also going to CREATE A DEVICE entry the same way I am making user entries.
         deviceData = data[data['Event Type'] == 'Device']

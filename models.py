@@ -16,7 +16,7 @@ class User(db.Model):
 class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     model = db.Column(db.String(75))
-    manufacturerID = db.Column(db.String(20))
+    manufacturerID = db.Column(db.String(20), unique=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User',
