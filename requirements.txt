@@ -3,6 +3,9 @@ numpy
 Flask-Injector
 Flask-Script
 Flask-Marshmallow
+flask-restful
 Flask-SQLAlchemy
+flask_sqlalchemy
 Flask-Migrate
 mysqlclient
+marshmallow-sqlalchemy

@@ -19,22 +19,28 @@ def load_data(file_name, dType):
     # data = genfromtxt(file_name, delimiter=',', dtype=dType, skip_header=1)
     data = pd.read_table(file_name, sep=',')
     #print("data in load data", data)
-    #data.fillna(0, inplace=True)
+    data.fillna(0, inplace=True)
     #print("data after fillna", data)
     return data
 
-def create_meas_record(meas_date, event_type, manufacturerID, gluc_value, insulin_value, carb ):
+def create_meas_record(meas_date, event_type, manufacturerID, gluc_value, insulin_value, carb, userRecord, deviceRecord ):
     ''' options for create measurement require measurement date, glucose value, insulin value, carbohydrate value, event type, manufacturerID, device_id and user_id '''
-    print('Measurement Record Created: ', meas_date, gluc_value, insulin_value, carb, event_type, manufacturerID )
-    record = m.Measurement(**{
+    print('Measurement Record Created: ', meas_date, event_type, manufacturerID, gluc_value, insulin_value, carb, deviceRecord.id )
+    measVars = {
         'meas_date': meas_date,
         'event_type': event_type,
         'manufacturerID': manufacturerID,
         'gluc_value': gluc_value,
         'insulin_value': insulin_value,
-        'carb': carb
-    })
-    # print(record)
+        'carb': carb,
+        'user_id': userRecord.id,
+        'device_id': deviceRecord.id
+    }
+    try:
+        return s.query(m.Measurement).filter_by(**measVars).one()
+    except NoResultFound:
+        record = m.Measurement(**measVars)
+        print("Create Meas record record: ", record, record.__dict__, dir(record))
     return record
 
 def create_user_record(name, userName):
@@ -47,24 +53,26 @@ def create_user_record(name, userName):
     try:
         return s.query(m.User).filter_by(**userVars).one()
     except NoResultFound:
-        record = m.User(**userVars)
-        print("Create User record record: ", record, record.__dict__, dir(record))
-        return record
+        userRecord = m.User(**userVars)
+        print("Create User userRecord userRecord: ", userRecord, userRecord.__dict__, dir(userRecord))
+        return userRecord
 
 
-def create_device_record(model, manufacturerID):
+def create_device_record(model, manufacturerID, userRecord):
     ''' options for create device require model, manufacturerID and user_id '''
-    print('Device Created: ', model, manufacturerID)
+    print('Device Created: ', model, manufacturerID, userRecord.id)
+
     deviceVars = {
             'model': model,
-            'manufacturerID': manufacturerID
+            'manufacturerID': manufacturerID,
+            'user_id': userRecord.id
     }
     try:
         return s.query(m.Device).filter_by(**deviceVars).one()
     except NoResultFound:
-        record = m.Device(**deviceVars)
-        print("Device Record record: ", record)
-        return record
+        deviceRecord = m.Device(**deviceVars)
+        print("Device Record record: ", deviceRecord.id, userRecord.id)
+        return deviceRecord
 
 
 Base = declarative_base()
@@ -101,9 +109,10 @@ if __name__ == "__main__":
         for (i, row) in deviceData.iterrows():
             model = row[5]
             manufacturerID = row[6]
-            print("mod, manuf:", model, manufacturerID)
-            deviceRecord = create_device_record(model, manufacturerID)
-            print("record: ", deviceRecord)
+            userRecordID = userRecord
+            print("mod, manuf, userRecID: ", model, manufacturerID, userRecordID)
+            deviceRecord = create_device_record(model, manufacturerID, userRecordID)
+            print("record: ", deviceRecord, userRecord.id)
             s.add(deviceRecord)
 
         s.commit()
@@ -113,16 +122,20 @@ if __name__ == "__main__":
 
         # This gets the 0th row, then gets the 'event type' column. This will get more info from the row.
         # print(data.iloc[0]['Event Type'])
+        measData = data
+        for (i, row) in data.iterrows():
+            if row[2] == 'EGV':
+                print("what is this?", i, row.iloc[6])
+                measDeviceID = s.query(m.Device).filter_by(**{'manufacturerID': row[6]}).one()
+                print('MEASDEVICEID:  ', measDeviceID)
+                measRecord = create_meas_record(row[1], row[2], row[6], row[7], row[8], row[9], userRecord, deviceRecord)
+                print(measRecord)
+                s.add(measRecord)
+        s.commit()
 
-        # for (i, row) in data.iterrows():
-        #     print("what is this?", i, row)
-        #     if row[2] == 'EGV':
-        #         record = create_meas_record(row[1], row[2], row[6], row[7], row[8], row[9])
-        #         print(record)
-        #         s.add(record)
-        # s.commit()
-        #
-        #
+
+
+
     except Exception as inst:
         print(type(inst))
         print(inst.args)

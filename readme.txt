@@ -27,4 +27,5 @@ $flask db upgrade (up-grades the db to have the useful stuff)
 
 
 
-8/6/17 - next: add user_id to the deviceRecord
+8/6/17 - add user_id to the deviceRecord
+8/9/17 - add measurements (fix create_meas_record). Pass device_id and userRecord_id into measurements
