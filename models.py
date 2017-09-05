@@ -1,4 +1,8 @@
-from .app import db
+import sys
+sys.path.append("../")
+
+# from cgmFlask.app import db
+from .app import *
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

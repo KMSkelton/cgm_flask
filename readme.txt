@@ -19,6 +19,26 @@ $mySQL -u USER -p [return]
 $[key symbol] type PW [return]
 $show databases
 
+Example POST route:
+http POST :5000/devices/ id=13 model=notTotesFake manufacturerID=3030XYZ user_id=1
+
+  yields:
+    HTTP/1.0 200 OK
+    Content-Length: 153
+    Content-Type: application/json
+    Date: Tue, 05 Sep 2017 05:29:30 GMT
+    Server: Werkzeug/0.12.2 Python/3.6.1
+
+    {
+        "Device: ": {
+            "id": 13,
+            "manufacturerID": "3030XYZ",
+            "model": "notTotesFake",
+            "user": 1
+        },
+        "message": "New device created"
+    }
+
 
 To migrate data (update db). We are using flask-migrate to manage the
 database. flask-migrate will create a table named "alembic_version" in your database.
