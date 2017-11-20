@@ -2,7 +2,7 @@ import sys
 sys.path.append("../")
 
 from flask import Flask, jsonify
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 #not sure IntegrityError is actually being imported
 from sqlalchemy.exc import IntegrityError
 from flask_migrate import Migrate

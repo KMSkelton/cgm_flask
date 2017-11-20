@@ -6,18 +6,17 @@ from cgmFlask.schema import UserSchema, DeviceSchema, MeasurementSchema
 from cgmFlask.app import app, db
 from flask import jsonify, request
 
-user_schema = UserSchema()
-users_schema = UserSchema(many = True)
+user_schema = UserSchema(strict=True)
+users_schema = UserSchema(many = True, strict=True)
 device_schema = DeviceSchema()
 devices_schema = DeviceSchema(many = True, only = ('id', 'model', 'manufacturerID'))
 measurement_schema = MeasurementSchema()
 measurements_schema = MeasurementSchema(many = True, only = ('id', 'meas_date', 'event_type', 'manufacturerID', 'gluc_value', 'insulin_value', 'carb'))
 
 #### API #####
-@app.route('/users')
+@app.route('/users/', methods = ['GET'])
 def get_users():
     users = User.query.all()
-    #Serialize the query
     users_result = users_schema.dump(users)
     return jsonify({'users': users_result.data})
 
