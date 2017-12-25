@@ -1,7 +1,11 @@
 Installation and Run
 in terminal:
 
-$pip3 install -r requirements.txt
+$conda create --name cgm_flask python=3
+
+$source activate cgm_flask
+
+$pip install -r requirements.txt
 
 
 Starting App:
@@ -43,6 +47,5 @@ $flask db upgrade (up-grades the db to have the useful stuff)
 
 
 
-11/19/17 - set up Vue front end
-8/9/17 - add measurements (fix create_meas_record). Pass device_id and userRecord_id into measurements
 8/6/17 - add user_id to the deviceRecord
+8/9/17 - add measurements (fix create_meas_record). Pass device_id and userRecord_id into measurements
