@@ -4,7 +4,7 @@ sys.path.append(".")
 from datetime import datetime
 from models import User, Device, Measurement
 from schema import UserSchema, DeviceSchema, MeasurementSchema
-from app import app
+from app import *
 from spinupSQLAlchemy import db
 from flask import jsonify, request
 

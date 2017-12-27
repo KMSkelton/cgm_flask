@@ -1,5 +1,7 @@
 import sys
 sys.path.append(".")
+import os
+databaseURL = os.environ['DATABASE_URI']
 
 from flask import Flask, jsonify
 from flask_migrate import Migrate
@@ -9,9 +11,9 @@ from spinupSQLAlchemy import db
 app = Flask(__name__)
 application = app
 
-#TODO update config to env vars for prod
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:I<3lambKebabs@localhost/cgmviz'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:l4mbk3b4bs@cgmflask.ctkfpndtiwzr.us-west-2.rds.amazonaws.com/cgmviz'
+#requires mySQL connection string
+# mysql://<user>:<pass>@<URL>/<databaseName>
+app.config['SQLALCHEMY_DATABASE_URI'] = databaseURL
 
 # Order matters - initialize SQLAlchemy before Marshmallow
 ma = Marshmallow(app)
