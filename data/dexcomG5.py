@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../")
 # from models import *
-import cgmFlask.models as m
+import models as m
 
 from numpy import genfromtxt, dtype
 import pandas as pd

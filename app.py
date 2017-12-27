@@ -20,8 +20,8 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
 
-import cgmFlask.views
+import views
 # import views
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
