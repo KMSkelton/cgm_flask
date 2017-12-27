@@ -1,8 +1,8 @@
 import sys
 sys.path.append("../")
 
-from models import User, Device, Measurement
-from app import ma
+from cgmFlask.models import User, Device, Measurement
+from cgmFlask.app import ma
 
 class UserSchema(ma.ModelSchema):
     class Meta:

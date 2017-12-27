@@ -9,3 +9,4 @@ flask_sqlalchemy
 Flask-Migrate
 mysqlclient
 marshmallow-sqlalchemy
+pandas

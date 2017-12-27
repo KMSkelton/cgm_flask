@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../")
 # from models import *
-import models as m
+import cgmFlask.models as m
 
 from numpy import genfromtxt, dtype
 import pandas as pd
@@ -78,7 +78,7 @@ def create_device_record(model, manufacturerID, userRecord):
 Base = declarative_base()
 
 if __name__ == "__main__":
-    engine = create_engine('mysql://sooperAdmin:I<3lambKebabs@localhost/cgmviz')
+    engine = create_engine('mysql://sooperAdmin:l4mbk3b4bs@cgmflask.ctkfpndtiwzr.us-west-2.rds.amazonaws.com/cgmviz')
 
     session=sessionmaker()
     session.configure(bind=engine)

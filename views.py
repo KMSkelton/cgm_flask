@@ -2,9 +2,9 @@ import sys
 sys.path.append("../")
 
 from datetime import datetime
-from models import User, Device, Measurement
-from schema import UserSchema, DeviceSchema, MeasurementSchema
-from app import app, db
+from cgmFlask.models import User, Device, Measurement
+from cgmFlask.schema import UserSchema, DeviceSchema, MeasurementSchema
+from cgmFlask.app import app, db
 from flask import jsonify, request
 
 user_schema = UserSchema()

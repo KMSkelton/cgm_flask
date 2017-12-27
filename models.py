@@ -1,8 +1,13 @@
 import sys
 sys.path.append("../")
 
-# from app import db
-from app import *
+# must include the below when running data/dexcomG5.py, comment out otherwise
+from flask import Flask, jsonify
+from flask.ext.sqlalchemy import SQLAlchemy
+app = Flask(__name__)
+db = SQLAlchemy(app)
+# must comment out the below when running data/dexcomG5.py
+# from cgmFlask.app import *
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

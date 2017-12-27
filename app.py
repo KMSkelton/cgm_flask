@@ -13,15 +13,15 @@ global db, ma, app
 app = Flask(__name__)
 application = app
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:I<3lambKebabs@localhost/cgmviz'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:l4mbk3b4bs@cgmviz.ctkfpndtiwzr.us-west-2.rds.amazonaws.com/'
-
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:l4mbk3b4bs@cgmflask.ctkfpndtiwzr.us-west-2.rds.amazonaws.com/cgmviz'
 
 # Order matters - initialize SQLAlchemy before Marshmallow
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+migrate = Migrate(app, db)
 
-import views
+import cgmFlask.views
+# import views
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

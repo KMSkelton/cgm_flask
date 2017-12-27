@@ -1,9 +1,9 @@
 Installation and Run
 in terminal:
 
-$conda create --name cgm_flask python=3
-
-$source activate cgm_flask
+Install virtualenv and start a new environment called cgmFlask:
+http://www.pythonforbeginners.com/basics/how-to-use-python-virtualenv
+$ source ~/virtualenv/cgmFlask/bin/activate
 
 $pip install -r requirements.txt
 
@@ -42,7 +42,9 @@ http POST :5000/devices/ id=13 model=notTotesFake manufacturerID=3030XYZ user_id
 
 To migrate data (update db). We are using flask-migrate to manage the
 database. flask-migrate will create a table named "alembic_version" in your database.
-$flask db migrate (which does nothing useful. Denise says it compares the models.py to the database state. Then it writes a file that tells the db how to go from current state to the state we want. It stores the file name in the alembic_versions table in the db. It DOES create a new file in migrations/versions.)
+
+~~$flask db migrate~~ (which does nothing useful. Denise says it compares the models.py to the database state. Then it writes a file that tells the db how to go from current state to the state we want. It stores the file name in the alembic_versions table in the db. It DOES create a new file in migrations/versions.)
+
 $flask db upgrade (up-grades the db to have the useful stuff)
 
 
