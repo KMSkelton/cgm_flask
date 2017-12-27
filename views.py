@@ -1,10 +1,11 @@
 import sys
-sys.path.append("../")
+sys.path.append(".")
 
 from datetime import datetime
 from models import User, Device, Measurement
 from schema import UserSchema, DeviceSchema, MeasurementSchema
-from app import app, db
+from app import app
+from spinupSQLAlchemy import db
 from flask import jsonify, request
 
 user_schema = UserSchema()

@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append(".")
 
 # must include the below when running data/dexcomG5.py, comment out otherwise
 # from flask import Flask, jsonify
@@ -8,7 +8,7 @@ sys.path.append("../")
 # db = SQLAlchemy(app)
 
 # must comment out the below when running data/dexcomG5.py
-from app import *
+from spinupSQLAlchemy import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

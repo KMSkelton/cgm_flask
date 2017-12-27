@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append(".")
 
 from models import User, Device, Measurement
 from app import ma
