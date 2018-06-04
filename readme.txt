@@ -51,3 +51,4 @@ $flask db upgrade (up-grades the db to have the useful stuff)
 
 8/6/17 - add user_id to the deviceRecord
 8/9/17 - add measurements (fix create_meas_record). Pass device_id and userRecord_id into measurements
+12/26/17 - use eb ssh to get to ec2 instance; continue work on Vue front end - user should be able to retrieve data as next step. Then add user, device
