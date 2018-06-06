@@ -8,7 +8,7 @@ Starting App:
 $export FLASK_APP=app.py
 $flask run
 
-Viewing output: localhost:9090/v1.0/items
+Viewing output: localhost:5000/devices/  may need 127.0.0.1:5000/devices/
 
 To view the SQL databases:
 $mySQL -u USER -p [return]
