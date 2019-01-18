@@ -1,27 +1,13 @@
-import sys
-sys.path.append("../")
+from flask import Blueprint
+from flask_restful import Api
+from resources.users import UserResource, UserListResource
+from resources.devices import DeviceResource, DeviceListResource
 
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-#not sure IntegrityError is actually being imported
-from sqlalchemy.exc import IntegrityError
-from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
-from flask_cors import CORS
+api_bp = Blueprint('api', __name__)
+api = Api(api_bp)
 
-global db, ma, app
+api.add_resource(UserResource, '/users/<int:id>', endpoint="user")
+api.add_resource(UserListResource, '/users', endpoint="users")
 
-app = Flask(__name__)
-CORS(app)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sooperAdmin:I<3lambKebabs@localhost/cgmviz'
-
-# Order matters - initialize SQLAlchemy before Marshmallow
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
-
-import cgmFlask.views
-
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+api.add_resource(DeviceResource, '/devices/<int:id>', endpoint="device")
+api.add_resource(DeviceListResource, '/devices', endpoint="devices")
