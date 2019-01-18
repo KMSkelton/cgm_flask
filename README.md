@@ -5,20 +5,29 @@ in terminal:
 
 `$ pip3 install -r requirements.txt`
 
+Requires cgm_flask directory in PYTHONPATH
+
+in terminal in cgm_flask directory:
+
+`$ export PYTHONPATH=$PWD`
 
 Starting App:
-`$ export FLASK_APP=app.py`
+
+`$ export FLASK_APP=run.py`
+
 `$ flask run`
 
-Viewing output: localhost:9090/v1.0/items
+Viewing output: localhost:5000/api/devices
 
 To view the SQL databases:
+
 `$mySQL -u USER -p [return]
 $[key symbol] type PW [return]
-$ show databases;`
+$show databases`
 
 Example POST route:
-`$ http POST :5000/devices/ id=13 model=notTotesFake manufacturerID=3030XYZ user_id=1`
+
+`$ http POST :5000/api/devices model=notTotesFake manufacturerID=3030XYZ user_id=1`
 
   yields:
     HTTP/1.0 200 OK
@@ -28,11 +37,12 @@ Example POST route:
     Server: Werkzeug/0.12.2 Python/3.6.1
 
     {
-        "Device: ": {
-            "id": 13,
-            "manufacturerID": "3030XYZ",
-            "model": "notTotesFake",
-            "user": 1
+        "data": {
+            "device: ": {
+                "id": 3,
+                "manufacturerID": "3030XYZ",
+                "model": "notTotesFake"
+            }
         },
         "message": "New device created"
     }
@@ -45,8 +55,6 @@ database. flask-migrate will create a table named "alembic_version" in your data
 
 `$ flask db upgrade` (up-grades the db to have the useful stuff)
 
-TEEESSSSSTSSS!
-$ pytest
-
-pytest will search the entire directory looking for *test.py and run them
-
+TESTS!!
+`$ export PYTHONPATH=$PWD`
+`pytest`
