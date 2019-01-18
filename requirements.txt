@@ -1,0 +1,13 @@
+Flask
+numpy
+Flask-Injector
+Flask-Script
+Flask-Marshmallow
+flask-restful
+Flask-SQLAlchemy
+flask_sqlalchemy
+Flask-Migrate
+flask-cors
+mysqlclient
+marshmallow-sqlalchemy
+pytest
