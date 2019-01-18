@@ -56,5 +56,7 @@ database. flask-migrate will create a table named "alembic_version" in your data
 `$ flask db upgrade` (up-grades the db to have the useful stuff)
 
 TESTS!!
+remove any __pycache__ files from /test to ensure that
+previous tests do not give false positive/negative
 `$ export PYTHONPATH=$PWD`
 `pytest`
