@@ -1,0 +1,8 @@
+.DeviceModel {
+  width: 75%;
+  border: 1px solid blue;
+}
+
+.DeviceManufID:nth-child(even) {
+  background-color: #1111AA;
+}
